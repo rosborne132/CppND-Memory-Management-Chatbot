@@ -52,9 +52,7 @@ ChatBot::ChatBot(const ChatBot &source)
     std::cout << "ChatBot Copy Constructor" << std::endl;
 
     // create shallow copies of resources
-    _currentNode = source._currentNode;
-    _rootNode = source._rootNode;
-    _chatLogic = source._chatLogic;
+    ChatBot::ConstructMemberVariables(source);
     _image = new wxBitmap(*source._image);
 }
 
