@@ -47,8 +47,7 @@ public:
 
     // communication
     void ReceiveMessageFromUser(std::string message);
-    void ConstructMemberVariables(const ChatBot source);
-    void ClearMemberVariables();
+    void ConstructMemberVariables(ChatBot &source);
 };
 
 #endif /* CHATBOT_H_ */
