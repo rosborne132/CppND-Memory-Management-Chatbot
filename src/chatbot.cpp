@@ -65,6 +65,7 @@ ChatBot &ChatBot::operator=(const ChatBot &source)
 
     if (&source == this) return *this;
 
+    // construct member-wise shallow copy
     _currentNode = source._currentNode;
     _rootNode = source._rootNode;
     _chatLogic = source._chatLogic;
@@ -83,14 +84,13 @@ ChatBot::ChatBot(ChatBot &&source)
 {
     std::cout << "ChatBot Move Constructor" << std::endl;
 
+    // transferring ownership of resources
     ChatBot::ConstructMemberVariables(source);
 
     _chatLogic->SetChatbotHandle(this);
 
-    _currentNode = nullptr;
-    _rootNode = nullptr;
-    _chatLogic = nullptr;
-    _image = NULL;
+    // remove ownership from source
+    ChatBot::ClearSourceVariables(source);
 }
 
 // move assignment operator
@@ -104,15 +104,13 @@ ChatBot &ChatBot::operator=(ChatBot &&source)
         delete _image;
     }
 
+    // transferring ownership of resources
     ChatBot::ConstructMemberVariables(source);
 
     _chatLogic->SetChatbotHandle(this);
 
-    // remove values from source
-    source._image = NULL;
-    source._rootNode = nullptr;
-    source._chatLogic = nullptr;
-    source._currentNode = nullptr;
+    // remove ownership from source
+    ChatBot::ClearSourceVariables(source);
 
     return *this;
 }
@@ -123,6 +121,14 @@ void ChatBot::ConstructMemberVariables(ChatBot &source)
     _rootNode = source._rootNode;
     _chatLogic = source._chatLogic;
     _image = source._image;
+}
+
+void ChatBot::ClearSourceVariables(ChatBot &source)
+{
+    source._image = NULL;
+    source._rootNode = nullptr;
+    source._chatLogic = nullptr;
+    source._currentNode = nullptr;
 }
 
 ////
